@@ -43,8 +43,8 @@ user_sim = {}
 for ii,u in enumerate(users):
   print("%d/%d building an SVM for %s" % (ii, len(users), u['username'].encode('utf-8')))
   uid = u['user_id']
-  lib = query_db('''select * from library where user_id = ?''', [uid])
-  pids = [x['paper_id'] for x in lib] # raw pids without version
+  libs = query_db('''select * from library where user_id = ?''', [uid])
+  pids  = [x['paper_id'] for x in query_db('''select * from folder where lib_id = ?''', [uid])]
   posix = [xtoi[p] for p in pids if p in xtoi]
   
   if not posix:
